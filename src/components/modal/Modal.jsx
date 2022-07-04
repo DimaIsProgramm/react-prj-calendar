@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import classnames from 'classnames';
 import './modal.scss';
 import moment from 'moment';
-import { fetchEvents, createEvents, getEvents } from '../../gateway/events';
+import { fetchEvents, createEvents, getEvents } from '../../gateway/events.js';
 
 const Modal = ({ isHidden, updateEvent, setUpdateEvent, setIsHidden, setEvents }) => {
   const handleChange = event => {
@@ -44,7 +44,7 @@ const Modal = ({ isHidden, updateEvent, setUpdateEvent, setIsHidden, setEvents }
       alert('Time must be a multiple of 15 minutes');
       return;
     }
-    if (startTime === endTime || Number(endTme.slice(0, 2)) < Number(startTime.slice(0, 2))) {
+    if (startTime === endTime || Number(endTime.slice(0, 2)) < Number(startTime.slice(0, 2))) {
       alert('Select another time');
       return;
     }
@@ -60,7 +60,7 @@ const Modal = ({ isHidden, updateEvent, setUpdateEvent, setIsHidden, setEvents }
       const sameEvents = events.some(
         event => String(moment(event.dateFrom)) === String(moment(dateFrom)),
       );
-      console.log(sameEvents);
+
       if (sameEvents) {
         alert('You already have events at this time');
         return;

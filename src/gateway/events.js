@@ -25,17 +25,19 @@ export const createEvents = eventData => {
 };
 
 export const getEvents = () => {
-  return fetch(baseUrl).then(res => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      throw new Error("Error. Cant't fetch events");
-    }
-  });
+  return fetch(baseUrl)
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error("Error. Cant't fetch events");
+      }
+    })
+    .catch(error => console.log(error));
 };
 
 export const fetchEvents = fn => {
-  allEvents().then(events => {
+  getEvents().then(events => {
     fn(events);
   });
 };

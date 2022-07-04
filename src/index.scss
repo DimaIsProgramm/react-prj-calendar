@@ -3,5 +3,16 @@
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Titan One', cursive;
+  overflow: hidden;
+  background: linear-gradient(169deg, #a48ec12e 0%, #d59292e6 100%),
+    linear-gradient(
+      212deg,
+      #516e95 0%,
+      #ca77e3 20%,
+      #e2e2e3 40%,
+      #2569c1 60%,
+      #0058cb 80%,
+      #ef6161 100%
+    );
 }

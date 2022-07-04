@@ -15,7 +15,10 @@ const Day = ({ dataDay, dayEvents, newValue, setUpdateEvents, setIsHidden, isHid
     Number(moment().local().format('mm'));
 
   const [redline, setRedline] = useState(startPoint);
-  const redlineElem = <div className="red-line" style={{ top: redline + 'px' }}></div>;
+
+  const redlineElem = (
+    <i className="fa-solid fa-clock red-line" style={{ top: redline + 'px' }}></i>
+  );
   useEffect(() => {
     const timerId = setInterval(() => {
       setRedline(redline => redline + 1);

@@ -1,13 +1,22 @@
 .button {
   height: 40px;
-  border-radius: 20px;
+  border-radius: 64%;
   border: 1px solid #a99dc3;
   outline: none;
   cursor: pointer;
   font-size: 16px;
-  box-shadow: -11px 6px 16px -5px rgb(129 13 25);
+  box-shadow: inset 0px -1px 15px 0px #3826c9;
   font-weight: 500;
-  background-color: #6250d78c;
+  background: linear-gradient(0deg, #fff 0%, transparent 100%),
+    linear-gradient(
+      90deg,
+      #d3e4fb 0%,
+      #a5c8f6 20%,
+      #77acf1 40%,
+      #1a73e8 60%,
+      #135cbc 80%,
+      #0e458e 100%
+    );
 }
 
 .icon-button {

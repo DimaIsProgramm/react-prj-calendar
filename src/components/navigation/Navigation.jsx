@@ -16,14 +16,15 @@ const Navigation = ({ weekDates, nextHandler }) => {
       }}
     >
       {weekDates.map(dayDate => (
-        <div
-          key={dayDate.getDate()}
-          className={classnames(['calendar__day-label day-label'], {
-            'day-label__current-day': isCurrentDay(dayDate),
-          })}
-        >
+        <div key={dayDate.getDate()} className="calendar__day-label day-label">
           <span className="day-label__day-name">{days[dayDate.getDay()]}</span>
-          <span className="day-label__day-number">{dayDate.getDate()}</span>
+          <span
+            className={classnames('calendar__day-number', {
+              'day-label__current-day': isCurrentDay(dayDate),
+            })}
+          >
+            {dayDate.getDate()}
+          </span>
         </div>
       ))}
     </header>
