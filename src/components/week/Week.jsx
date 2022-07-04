@@ -1,9 +1,11 @@
 import React from 'react';
 import Day from '../day/Day';
+import moment from 'moment';
+import events from '../../gateway/events';
 
 import './week.scss';
 
-const Week = ({ weekDates, events }) => {
+const Week = ({ weekDates, setUpdateEvents, newValue, events, isShowModal, isHidden }) => {
   return (
     <div className="calendar__week">
       {weekDates.map(dayStart => {
@@ -14,7 +16,17 @@ const Week = ({ weekDates, events }) => {
           event => event.dateFrom > dayStart && event.dateTo < dayEnd,
         );
 
-        return <Day key={dayStart.getDate()} dataDay={dayStart.getDate()} dayEvents={dayEvents} />;
+        return (
+          <Day
+            key={dayStart.getDate()}
+            dataDay={dayStart.getDate()}
+            dayEvents={dayEvents}
+            setUpdateEvents={setUpdateEvents}
+            newValue={newValue}
+            isShowModal={isShowModal}
+            isHidden={isHidden}
+          />
+        );
       })}
     </div>
   );

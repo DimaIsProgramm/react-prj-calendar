@@ -55,6 +55,11 @@
   justify-content: space-around;
   opacity: 0.6;
 
+  &__current-day {
+    background-color: #b6b6d7;
+    border-radius: 45px;
+    border-bottom: 2px solid blue;
+  }
   &__day-name {
     font-size: 14px;
     text-transform: uppercase;
