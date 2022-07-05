@@ -1,17 +1,18 @@
 .button {
   height: 40px;
-  border-radius: 64%;
+  width: 125px;
+  border-radius: 50%;
   border: 1px solid #a99dc3;
   outline: none;
   cursor: pointer;
   font-size: 16px;
-  box-shadow: inset 0px -1px 15px 0px #3826c9;
+  box-shadow: -6px 5px 7px 3px #27224e;
   font-weight: 500;
-  background: linear-gradient(0deg, #fff 0%, transparent 100%),
+  background: linear-gradient(125deg, #857ef7ad 0%, transparent 100%),
     linear-gradient(
-      90deg,
-      #d3e4fb 0%,
-      #a5c8f6 20%,
+      186deg,
+      #0b2446 0%,
+      #752dbf 20%,
       #77acf1 40%,
       #1a73e8 60%,
       #135cbc 80%,
