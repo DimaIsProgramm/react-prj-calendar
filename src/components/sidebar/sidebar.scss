@@ -1,3 +1,8 @@
+.calendar__time-scale {
+  display: flex;
+  flex-direction: column;
+}
+
 .calendar {
   display: flex;
   flex-direction: column;
@@ -10,15 +15,19 @@
 }
 
 .time-slot {
-  height: 60px;
-  width: 48px;
-  text-align: right;
+  width: 60px;
+  height: 59px;
+  text-align: center;
+  display: flex;
+  border-bottom: 1px solid #dfe0e4;
+  align-items: end;
+  justify-content: space-between;
+  font-size: 12px;
+  position: relative;
 
   &__time {
-    // position: relative;
-    font-size: 12px;
-    opacity: 0.7;
-    top: -12px;
-    margin-right: 4px;
+    width: calc(100% - 8px);
+    padding-left: 8px;
+    left: 0;
   }
 }

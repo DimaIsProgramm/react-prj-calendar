@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 import Modal from './components/modal/Modal.jsx';
 import moment from 'moment';
 import { getWeekStartDate, generateWeekRange, getMonthShown } from '../src/utils/dateUtils.js';
 import './common.scss';
-import { getEvents, createEvent, updateEvent, deleteEvent } from './gateway/events';
 import PropTypes from 'prop-types';
 
 const App = () => {
@@ -62,52 +61,6 @@ const App = () => {
   const todayHandler = () => {
     const today = generateWeekRange(getWeekStartDate(new Date()));
     setWeek(today);
-  };
-
-  const closeModal = () => {
-    isHidden(true);
-    setCurentEvent(null);
-  };
-  const onCreateEvent = eventData => {
-    createEvent(eventData)
-      .then(newEvent => {
-        setEvents([newEvent, ...events]);
-        closeModal();
-      })
-      .catch(error => {
-        alert(error);
-      });
-  };
-  const fetchEvents = () => {
-    getEvents()
-      .then(events => setEvents(events))
-      .catch(e => alert(e));
-  };
-
-  useEffect(() => {
-    fetchEvents();
-
-    const intervaiId = setInterval(() => {
-      if (new Date().getSeconds() === 0) setWeek(generateWeekRange(getWeekStartDate(new Date())));
-    }, 1000);
-    return () => clearInterval(intervaiId);
-  }, []);
-
-  const onUpdateEvent = eventData => {
-    updateEvent(eventData)
-      .then(updatedEvent => {
-        const updatedEvents = events.map(event => {
-          if (event.id === updatedEvent.id) {
-            event = eventData;
-          }
-          return event;
-        });
-        setEvents(updatedEvents);
-        closeModal();
-      })
-      .catch(error => {
-        alert(error);
-      });
   };
 
   return (

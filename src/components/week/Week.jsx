@@ -5,7 +5,7 @@ import events from '../../gateway/events';
 
 import './week.scss';
 
-const Week = ({ weekDates, setUpdateEvents, newValue, events, isShowModal, isHidden }) => {
+const Week = ({ weekDates, setUpdateEvents, newValue, events, setIsHidden, isHidden }) => {
   return (
     <div className="calendar__week">
       {weekDates.map(dayStart => {
@@ -15,15 +15,14 @@ const Week = ({ weekDates, setUpdateEvents, newValue, events, isShowModal, isHid
         const dayEvents = events.filter(
           event => event.dateFrom > dayStart && event.dateTo < dayEnd,
         );
-
         return (
           <Day
             key={dayStart.getDate()}
-            dataDay={dayStart.getDate()}
+            dataDay={dayStart}
             dayEvents={dayEvents}
             setUpdateEvents={setUpdateEvents}
             newValue={newValue}
-            isShowModal={isShowModal}
+            setIsHidden={setIsHidden}
             isHidden={isHidden}
           />
         );

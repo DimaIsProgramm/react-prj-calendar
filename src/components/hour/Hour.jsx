@@ -12,14 +12,14 @@ const Hour = ({
   isHidden,
   setIsHidden,
 }) => {
-  const handleClick = e => {
+  const handleClick = event => {
     setIsHidden(true);
 
     const creatStartEventData =
       moment().format('YYYY-MM-') +
       formatMins(Number(dataDay)) +
       'T' +
-      formatMins(Number(e.target.dataset.time) - 1) +
+      formatMins(Number(event.target.dataset.time) - 1) +
       ':00';
 
     newValue(creatStartEventData);
@@ -39,6 +39,7 @@ const Hour = ({
             setIsHidden={setIsHidden}
             setUpdateEvents={setUpdateEvents}
             hourEvents={hourEvents}
+            isHidden={isHidden}
           />
         );
       })}

@@ -5,10 +5,21 @@
   align-items: center;
 
   &__content {
-    background: #fff;
+    background: linear-gradient(48deg, #bfbfbf 0%, #40355acc 100%),
+      linear-gradient(
+        137deg,
+        #6a7d97 0%,
+        #a5c8f6 20%,
+        #d3d3d3 40%,
+        #1a73e8 60%,
+        #4910d3 80%,
+        #3b5e8d 100%
+      );
     padding: 16px;
     border: 1px solid #ccc;
     border-radius: 8px;
+    box-shadow: 0px 14px 17px 12px rgb(0 0 0 / 14%), 0px 9px 46px 8px rgb(0 0 0 / 12%),
+      0px 11px 15px -7px rgb(0 0 0 / 20%);
   }
 }
 
@@ -46,6 +57,11 @@
   &__field {
     margin: 8px;
     border: none;
+    background: bottom;
+  }
+
+  &__time-bar {
+    background: bottom;
   }
 
   &__submit-btn {

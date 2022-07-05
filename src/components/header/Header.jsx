@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import './header.scss';
 
-const Header = ({ isShowModal, prevHandler, nextHandler, todayHandler, month }) => {
+const Header = ({ isShowModal, prevHandler, nextHandler, todayHandler, monthShown }) => {
   return (
     <header className="header">
       <div className="navigation">
@@ -18,7 +18,20 @@ const Header = ({ isShowModal, prevHandler, nextHandler, todayHandler, month }) 
         <button className="icon-button navigation__nav-icon" onClick={nextHandler}>
           <i className="fa-solid fa-circle-arrow-right"></i>
         </button>
-        <span className="navigation__displayed-month">{month.format('MMM')}</span>
+        <span className="navigation__displayed-month">{monthShown}</span>
+      </div>
+      <div className="author-text">
+        <div className="sun">
+          <i className="fa-solid fa-sun"></i>
+          <i className="fa-solid fa-sun"></i>
+          <i className="fa-solid fa-sun"></i>
+        </div>
+        <span className="author-text">{`Calendar ${moment().format('YYYY')}`}</span>
+        <div className="moon">
+          <i className="fa-solid fa-moon"></i>
+          <i className="fa-solid fa-moon"></i>
+          <i className="fa-solid fa-moon"></i>
+        </div>
       </div>
     </header>
   );

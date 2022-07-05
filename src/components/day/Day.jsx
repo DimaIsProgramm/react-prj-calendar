@@ -16,23 +16,26 @@ const Day = ({ dataDay, dayEvents, newValue, setUpdateEvents, setIsHidden, isHid
 
   const [redline, setRedline] = useState(startPoint);
 
-  const redlineElem = (
-    <i className="fa-solid fa-clock red-line" style={{ top: redline + 'px' }}></i>
-  );
+  const redlineElem = <div className="red-line" style={{ top: redline + 'px' }}></div>;
   useEffect(() => {
     const timerId = setInterval(() => {
       setRedline(redline => redline + 1);
     }, 60000);
     return () => clearInterval(timerId);
-  }, []);
+  });
+  const checkCurrentDay = () =>
+    moment().local().format('YYYY MM DD') === moment(dataDay).format('YYYY MM DD');
 
   return (
     <div className="calendar__day" data-day={dataDay}>
-      {dataDay === Number(moment().local().format('DD')) ? redlineElem : null}
+      {checkCurrentDay() && redlineElem}
       {hours.map(hour => {
-        const hourEvents = dayEvents.filter(
-          event => event.dateFrom.getHours() === hour && event.dateFrom.getDays() === dataDay,
-        );
+        const hourEvents = dayEvents.filter(event => {
+          return (
+            Number(moment(event.dateFrom).format('HH')) === hour &&
+            Number(moment(event.dateFrom).format('DD')) === dataDay
+          );
+        });
 
         return (
           <Hour

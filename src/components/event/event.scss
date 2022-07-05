@@ -24,4 +24,11 @@
 .delete-event-btn {
   cursor: pointer;
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: auto;
+  margin-left: 48%;
+  margin-top: 20%;
+  padding-left: 25%;
 }

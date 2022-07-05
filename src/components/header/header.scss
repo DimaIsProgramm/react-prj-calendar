@@ -1,8 +1,8 @@
 .header {
   display: flex;
-  color: #fffffffa;
+  justify-content: space-between;
+  color: #120e28fa;
   height: 60px;
-
   padding: 0 48px;
   align-items: center;
 }
@@ -29,4 +29,31 @@
   &__displayed-month {
     margin-left: 10px;
   }
+}
+
+.author-text {
+  display: flex;
+  color: #2d1e7c;
+  margin: 10px;
+  justify-content: center;
+  align-items: baseline;
+  font-size: 16px;
+}
+
+.sun {
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
+}
+
+.moon {
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
+}
+
+.author-text {
+  margin: 0 5px;
 }

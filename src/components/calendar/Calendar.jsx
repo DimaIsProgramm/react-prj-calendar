@@ -3,11 +3,10 @@ import React from 'react';
 import Navigation from './../navigation/Navigation';
 import Week from '../week/Week';
 import Sidebar from '../sidebar/Sidebar';
-import events from '../../gateway/events';
 
 import './calendar.scss';
 
-const Calendar = ({ weekDates, newValue, setUpdateEvents, events, setIsHidden }) => {
+const Calendar = ({ weekDates, today, newValue, setUpdateEvents, events, setIsHidden }) => {
   return (
     <section className="calendar">
       <Navigation weekDates={weekDates} />
@@ -20,6 +19,7 @@ const Calendar = ({ weekDates, newValue, setUpdateEvents, events, setIsHidden })
             setUpdateEvents={setUpdateEvents}
             events={events}
             setIsHidden={setIsHidden}
+            today={today}
           />
         </div>
       </div>

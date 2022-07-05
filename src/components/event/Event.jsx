@@ -1,65 +1,80 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
-import { deleteEvent, fetchEvents } from '../../gateway/events';
-
 import './event.scss';
-import '../../common.scss';
 
-const Event = ({ height, marginTop, title, time, setIsHidden, hourEvents, setUpdateEvents }) => {
-  const eventStyle = {
-    height,
-    marginTop,
+const Event = ({ events, setCurrentEvent, openPopup }) => {
+  const prepareEventStyles = (start, end, color) => {
+    return {
+      top: `${moment(start).minutes()}px`,
+      height: `${moment(end).diff(moment(start), 'minutes')}px`,
+      backgroundColor: color,
+    };
   };
 
-  const [deleteEventVisible, setDeleteEventVisible] = useState(false);
-  let newHeight;
-  if (height < Number('15%')) {
-    newHeight = '15%';
-    height = newHeight;
-    return newHeight;
-  }
-  const newEventStyle = {
-    height: newHeight,
-    marginTop,
+  const prepareEventClass = (start, end) => {
+    const momentStart = moment(start).format('YYYY-MM-DD HH:mm');
+    const momentEnd = moment(end).format('YYYY-MM-DD HH:mm');
+    const momentNow = moment().format('YYYY-MM-DD HH:mm');
+    if (momentStart < momentNow && momentNow >= momentEnd) {
+      return 'event event__past';
+    } else {
+      return 'event';
+    }
   };
-  const handleClick = e => {
+
+  const formatEventTime = (start, end) => {
+    return `${moment(start).format('HH:mm')} - ${moment(end).format('HH:mm')}`;
+  };
+
+  const onClickEvent = (e, id) => {
     e.stopPropagation();
-    setIsHidden();
-    setDeleteEventVisible(!deleteEventVisible);
+
+    const event = events.find(event => event.id === id);
+    event.day = moment(event).format('YYYY-MM-DD');
+    setCurrentEvent(event);
+    openPopup(preparePositionPopup(e));
   };
 
-  const handleDelete = e => {
-    e.stopPropagation();
+  const preparePositionPopup = event => {
+    const diffPositionClickWidth = window.innerWidth - event.pageX;
+    const diffPositionClickHeight = window.innerHeight - event.pageY;
+    const marginClickWidth = 150;
+    const marginClickHeight = 125;
+    const left =
+      diffPositionClickWidth >= marginClickWidth
+        ? event.pageX
+        : window.innerWidth - marginClickWidth;
+    const top =
+      diffPositionClickHeight >= marginClickHeight
+        ? event.pageY
+        : window.innerHeight - marginClickHeight;
 
-    setIsHidden(false);
-
-    return hourEvents.map(({ id, date, dateFrom }) => {
-      let start = moment().format('YYYY/MM/DD HH:mm');
-      let difference = moment
-        .duration(moment(dateFrom, 'YYYY/MM/DD HH:mm').diff(moment(start, 'YYYY/MM/DD HH:mm')))
-        .asHours();
-
-      if (difference <= 0.25 && difference > 0 && moment().format('YYYY-MM-DD') === date) {
-        alert('You can not delete event earlier than 15 min');
-        return;
-      } else {
-        deleteEvent(id).then(() => fetchEvents(setUpdateEvents));
-      }
-    });
+    return { top, left };
   };
 
-  return (
-    <div style={eventStyle} className="event" onClick={handleClick}>
-      <div className="event__title">{title}</div>
-      <div className="event__time">{time}</div>
-      {isDeleteEventVisible ? (
-        <button onClick={handleDelete} className="delete-event-btn">
-          <i className="fas fa-trash-alt"></i>
-          <span>Delete</span>
-        </button>
-      ) : null}
-    </div>
-  );
+  return events.map(({ id, title, start, end, color }) => {
+    return (
+      <div
+        key={id}
+        className={prepareEventClass(start, end)}
+        style={prepareEventStyles(start, end, color)}
+        onClick={e => onClickEvent(e, id)}
+      >
+        {moment(end).diff(moment(start), 'minutes') > 30 && (
+          <div className="event-title">{title}</div>
+        )}
+        <div
+          className={
+            moment(end).diff(moment(start), 'minutes') <= 15
+              ? 'event__time event__time-small'
+              : 'event__time'
+          }
+        >
+          {formatEventTime(start, end)}
+        </div>
+      </div>
+    );
+  });
 };
 
 export default Event;
