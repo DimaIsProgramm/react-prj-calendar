@@ -1,19 +1,8 @@
 import React, { useEffect } from 'react';
-import classnames from 'classnames';
 import './modal.scss';
-import moment from 'moment';
-import { fetchEvents, createEvents, getEvents } from '../../gateway/events.js';
 import EventForm from '../event/EventForm';
 
-const Modal = ({
-  isHidden,
-  onUpdateEvent,
-  setIsHidden,
-  setEvents,
-  onCreateEvent,
-  currentEvent,
-  events,
-}) => {
+const Modal = ({ isHidden, setIsHidden, onCreateEvent }) => {
   const closeHanlder = () => {
     setIsHidden(true);
   };
@@ -29,12 +18,7 @@ const Modal = ({
           <button className="create-event__close-btn" onClick={closeHanlder}>
             +
           </button>
-          <EventForm
-            events={events}
-            onCreateEvent={onCreateEvent}
-            onUpdateEvent={onUpdateEvent}
-            currentEvent={currentEvent}
-          />
+          <EventForm setIsHidden={setIsHidden} onCreateEvent={onCreateEvent} />
         </div>
       </div>
     </div>

@@ -2,11 +2,14 @@ import React from 'react';
 import moment from 'moment';
 import './header.scss';
 
-const Header = ({ isShowModal, prevHandler, nextHandler, todayHandler, monthShown }) => {
+const Header = ({ setIsHidden, prevHandler, nextHandler, todayHandler, monthShown }) => {
+  const shoHandler = () => {
+    setIsHidden(false);
+  };
   return (
     <header className="header">
       <div className="navigation">
-        <button className="button create-event-btn" onClick={isShowModal}>
+        <button className="button create-event-btn" onClick={shoHandler}>
           <i className="fa-solid fa-circle-plus create-event-btn__icon"></i>Create
         </button>
         <button className="navigation__today-btn button" onClick={todayHandler}>

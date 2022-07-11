@@ -1,50 +1,38 @@
-import React from 'react';
-import moment from 'moment';
 import Event from '../event/Event';
+import React from 'react';
 import { formatMins } from '../../../src/utils/dateUtils.js';
+import Redline from '../hour/Redline';
+import PropTypes from 'prop-types';
 
-const Hour = ({
-  dataHour,
-  hourEvents,
-  newValue,
-  dataDay,
-  setUpdateEvents,
-  isHidden,
-  setIsHidden,
-}) => {
-  const handleClick = event => {
-    setIsHidden(true);
-
-    const creatStartEventData =
-      moment().format('YYYY-MM-') +
-      formatMins(Number(dataDay)) +
-      'T' +
-      formatMins(Number(event.target.dataset.time) - 1) +
-      ':00';
-
-    newValue(creatStartEventData);
-
-    return creatStartEventData;
-  };
+const Hour = ({ dataHour, hourEvents, isToday, onDeleteEvent }) => {
   return (
-    <div className="calendar__time-slot" data-time={dataHour + 1} onClick={handleClick}>
+    <div className="calendar__time-slot" data-time={dataHour + 1}>
+      {isToday && <Redline />}
+
       {hourEvents.map(({ id, dateFrom, dateTo, title }) => {
+        const eventStart = `${dateFrom.getHours()}:${formatMins(dateFrom.getMinutes())}`;
+        const eventEnd = `${dateTo.getHours()}:${formatMins(dateTo.getMinutes())}`;
         return (
           <Event
             key={id}
-            height={Number(moment(dateFrom).format('mm')) - Number(moment(dateTo).format('mm'))}
-            marginTop={moment(dateFrom).format('mm') + 'px'}
-            time={`${moment(dateFrom).format('HH:mm')} - ${moment(dateTo).format('HH:mm')}`}
+            id={id}
+            height={(dateTo.getTime() - dateFrom.getTime()) / (1000 * 60)}
+            marginTop={dateFrom.getMinutes()}
+            time={`${eventStart} - ${eventEnd}`}
             title={title}
-            setIsHidden={setIsHidden}
-            setUpdateEvents={setUpdateEvents}
-            hourEvents={hourEvents}
-            isHidden={isHidden}
+            onDeleteEvent={onDeleteEvent}
           />
         );
       })}
     </div>
   );
+};
+
+Hour.propTypes = {
+  dataHour: PropTypes.number.isRequired,
+  hourEvents: PropTypes.array.isRequired,
+  onDeleteEvent: PropTypes.func.isRequired,
+  isToday: PropTypes.bool.isRequired,
 };
 
 export default Hour;

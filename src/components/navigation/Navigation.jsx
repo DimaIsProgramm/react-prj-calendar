@@ -35,4 +35,5 @@ export default Navigation;
 
 Navigation.propTypes = {
   isCurrentDay: PropTypes.func,
+  weekDates: PropTypes.array.isRequired,
 };

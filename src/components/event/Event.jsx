@@ -1,80 +1,44 @@
-import React from 'react';
-import moment from 'moment';
+import React, { useState } from 'react';
 import './event.scss';
+import '../../common.scss';
+import PropTypes from 'prop-types';
 
-const Event = ({ events, setCurrentEvent, openPopup }) => {
-  const prepareEventStyles = (start, end, color) => {
-    return {
-      top: `${moment(start).minutes()}px`,
-      height: `${moment(end).diff(moment(start), 'minutes')}px`,
-      backgroundColor: color,
-    };
+const Event = ({ height, marginTop, title, time, onDeleteEvent, id }) => {
+  const [isEvent, setIsEvent] = useState(true);
+  const [deleteEventVisible, setDeleteEventVisible] = useState(false);
+  const eventStyle = {
+    height,
+    marginTop,
   };
-
-  const prepareEventClass = (start, end) => {
-    const momentStart = moment(start).format('YYYY-MM-DD HH:mm');
-    const momentEnd = moment(end).format('YYYY-MM-DD HH:mm');
-    const momentNow = moment().format('YYYY-MM-DD HH:mm');
-    if (momentStart < momentNow && momentNow >= momentEnd) {
-      return 'event event__past';
-    } else {
-      return 'event';
-    }
-  };
-
-  const formatEventTime = (start, end) => {
-    return `${moment(start).format('HH:mm')} - ${moment(end).format('HH:mm')}`;
-  };
-
-  const onClickEvent = (e, id) => {
-    e.stopPropagation();
-
-    const event = events.find(event => event.id === id);
-    event.day = moment(event).format('YYYY-MM-DD');
-    setCurrentEvent(event);
-    openPopup(preparePositionPopup(e));
-  };
-
-  const preparePositionPopup = event => {
-    const diffPositionClickWidth = window.innerWidth - event.pageX;
-    const diffPositionClickHeight = window.innerHeight - event.pageY;
-    const marginClickWidth = 150;
-    const marginClickHeight = 125;
-    const left =
-      diffPositionClickWidth >= marginClickWidth
-        ? event.pageX
-        : window.innerWidth - marginClickWidth;
-    const top =
-      diffPositionClickHeight >= marginClickHeight
-        ? event.pageY
-        : window.innerHeight - marginClickHeight;
-
-    return { top, left };
-  };
-
-  return events.map(({ id, title, start, end, color }) => {
-    return (
+  return (
+    <>
       <div
-        key={id}
-        className={prepareEventClass(start, end)}
-        style={prepareEventStyles(start, end, color)}
-        onClick={e => onClickEvent(e, id)}
+        style={eventStyle}
+        className="event"
+        onClick={() => {
+          setIsEvent(false);
+          setDeleteEventVisible(true);
+        }}
       >
-        {moment(end).diff(moment(start), 'minutes') > 30 && (
-          <div className="event-title">{title}</div>
-        )}
-        <div
-          className={
-            moment(end).diff(moment(start), 'minutes') <= 15
-              ? 'event__time event__time-small'
-              : 'event__time'
-          }
-        >
-          {formatEventTime(start, end)}
-        </div>
+        <div className="event__title">{title}</div>
+        <div className="event__time">{time}</div>
       </div>
-    );
-  });
+      {deleteEventVisible && (
+        <button onClick={() => onDeleteEvent(id)} className="delete-event-btn">
+          <i className="fas fa-trash-alt"></i> Delete
+        </button>
+      )}
+    </>
+  );
+};
+
+Event.propTypes = {
+  id: PropTypes.string.isRequired,
+  height: PropTypes.number.isRequired,
+  marginTop: PropTypes.number.isRequired,
+  time: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  onDeleteEvent: PropTypes.func.isRequired,
 };
 
 export default Event;
